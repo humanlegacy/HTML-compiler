@@ -1,5 +1,5 @@
 module.exports = {
-	root: 'smart/',
+	root: 'www/',
 	api:{
 		use:'build',
 		dev:'https://demo.dev.com',
@@ -8,16 +8,17 @@ module.exports = {
 	watchFile: [
 		'*.html',
 		'view/*.html', 
+		'view/*/*.html', 
 		'assets/css/*.css',
 		'assets/js/*.js'
 	], 
 	view:{
-		dir: 'smart/view',
+		dir: 'www/view',
 		files:['index.html']
 	},
 	template:{
 		use:true,
-		dir:'smart/_template',
+		dir:'www/_template',
 		sign:{
 			header:/<!--template:header-->([\s\S]*)<!--template:header-->/,
 			body:/<!--template:body-->([\s\S]*)<!--template:body-->/,
@@ -25,12 +26,12 @@ module.exports = {
 		}
 	},
 	less: {
-		input: 'smart/_dev/less',
-		output:  'smart/assets/css'
+		input: 'www/_dev/less',
+		output:  'www/assets/css'
 	},
 	javascript:{
-		input:'smart/_dev/js/*.js',
-		output:  'smart/assets/js'
+		input:'www/_dev/js/*.js',
+		output:  'www/assets/js'
 	},
 	base64Options: {
 		baseDir :'',

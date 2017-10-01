@@ -1,4 +1,5 @@
 var conf = require('./gulp.config.js');
+var path = require('path');
 
 var browserSync = require('browser-sync'),
 		reload = browserSync.reload,
@@ -48,8 +49,10 @@ gulp.task('templates', function(){
 				data = data.replace(conf.template.sign[name], "<!--template:"+name+"-->"+content[name]+"<!--template:"+name+"-->");
 			}
 		}
-		fs.writeFileSync(file, data);
-		console.log('Template Done!');
+		fs.writeFile(file, data,function(){
+			console.log('### Done:'+file);
+		});
+		
 	});
 
 });
