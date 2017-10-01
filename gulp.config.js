@@ -1,5 +1,5 @@
 module.exports = {
-	baseDir: 'smart/',
+	root: 'smart/',
 	api:{
 		use:'build',
 		dev:'https://demo.dev.com',

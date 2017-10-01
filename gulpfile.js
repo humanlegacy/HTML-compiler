@@ -63,9 +63,9 @@ if(conf.template.use){
 gulp.task('default',['less','minJS','templates'], function() {
 	browserSync({
 		server: {
-			baseDir: conf.baseDir
+			baseDir: conf.root
 		}
 	});
-	gulp.watch(conf.watchFile ,{cwd: conf.baseDir}, reload);
+	gulp.watch(conf.watchFile ,{cwd: conf.root}, reload);
 });
  
