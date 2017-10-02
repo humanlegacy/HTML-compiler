@@ -1,1 +1,1 @@
-console.log("https://demo.build.com");var api="https://demo.build.com";
+console.log("https://demo.build.com"),console.log("https://demo.build.com");var api="https://demo.build.com";

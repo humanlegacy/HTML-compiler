@@ -5,32 +5,20 @@ module.exports = {
 		dev:'https://demo.dev.com',
 		build:'https://demo.build.com'
 	},
-	watchFile: [
-		'*.html',
-		'view/*.html', 
-		'view/*/*.html', 
-		'assets/css/*.css',
-		'assets/js/*.js'
-	], 
 	view:{
 		dir: 'www/view',
 		files:['index.html']
 	},
 	template:{
 		use:true,
-		dir:'www/_template',
-		sign:{
-			header:/<!--template:header-->([\s\S]*)<!--template:header-->/,
-			body:/<!--template:body-->([\s\S]*)<!--template:body-->/,
-			footer:/<!--template:footer-->([\s\S]*)<!--template:footer-->/
-		}
+		dir:'www/_template'
 	},
 	less: {
 		input: 'www/_dev/less',
 		output:  'www/assets/css'
 	},
 	javascript:{
-		input:'www/_dev/js/*.js',
+		input:'www/_dev/js/',
 		output:  'www/assets/js'
 	},
 	base64Options: {
