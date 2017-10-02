@@ -1,25 +1,13 @@
 module.exports = {
-	root: 'www/',
+	root: 'www',
+	build:'build-www',
 	api:{
-		use:'build',
+		use:'dev',
 		dev:'https://demo.dev.com',
 		build:'https://demo.build.com'
 	},
-	view:{
-		dir: 'www/view',
-		files:['index.html']
-	},
 	template:{
-		use:true,
-		dir:'www/_template'
-	},
-	less: {
-		input: 'www/_dev/less',
-		output:  'www/assets/css'
-	},
-	javascript:{
-		input:'www/_dev/js/',
-		output:  'www/assets/js'
+		use:true
 	},
 	base64Options: {
 		baseDir :'',

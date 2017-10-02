@@ -28,13 +28,23 @@ gulp-live
 npm install
 ```
 安装项目模板相关依赖，至此完成安装。
+```js
+//开发环境
+npm run dev
+
+//编译正式环境
+npm run build
+```
 ## 2.gulp.config 配置
 在下载的项目模板中`gulp.config.js`为项目配置文件。
 ```js
 {
     //配置项目根目录
-    baseDir: 'smart/',
+    root: 'www',
 
+    //编译目录
+    build: 'build-www',	
+	
     //在js文件中使用变量{{api}},指定不同开发环境
     api: {
         use: 'build',
@@ -42,46 +52,10 @@ npm install
         build: 'https://demo'
     },
 
-    //配置监听的目录与文件
-    watchFile: [
-        '*.html',
-        'view/*.html',
-        'assets/css/*.css',
-        'assets/js/*.js'
-    ],
-
-    //视图文件（html）目录
-    view: {
-        dir: 'smart/view',
-        files: ['index.html']
-    },
-
-    //模板相关配置
+    //模板
     template: {
         //是否启用模板
-        use: true,
-        //指定模板目录
-        dir: 'smart/_template',
-        //在视图文件（html）中的模板标示
-        sign: {
-            //属性：模板名称
-            //值：对应模板标示
-            header: /<!--template:header-->([\s\S]*)<!--template:header-->/,
-            body: /<!--template:body-->([\s\S]*)<!--template:body-->/,
-            footer: /<!--template:footer-->([\s\S]*)<!--template:footer-->/
-        }
-    },
-
-    //less文件件编译的输入输出目录
-    less: {
-        input: 'smart/_dev/less',
-        output: 'smart/assets/css'
-    },
-
-    //js文件压缩输入输出目录
-    javascript: {
-        input: 'smart/_dev/js/*.js',
-        output: 'smart/assets/js'
+        use: true
     },
 
     //图片转base64，相关配置说明请查阅gulp-base64
@@ -94,5 +68,9 @@ npm install
     },
 }
 ```
-
+## 3.在文件中使用模板
+```js
+<template:header>
+```
+自动应用`_dev/template`中的模板文件header.html
 

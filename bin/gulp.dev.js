@@ -5,14 +5,19 @@ var url = require('url'),
 		livereload = require('livereload'),
 		opn = opn = require('opn'),
 		conf = require('../gulp.config.js'),
-		contentFn = require('../lib/content'),
+		content = require('../lib/content'),
 		types=require('../lib/types').types,
 		replace = require('gulp-replace'),
-		uglify = require('gulp-uglify');		
+		uglify = require('gulp-uglify'),
+		gulp = require('gulp'),
+		less = require('gulp-less'),
+		cssmin = require('gulp-minify-css'),
+		base64 = require('gulp-base64'),
+		base64Options = conf.base64Options;		
 
 http.createServer(function (req, res) {
 		var pathname = url.parse(req.url).pathname;
-		var realPath = path.resolve(path.join("www", pathname));
+		var realPath = path.resolve(path.join(conf.root, pathname));
 		
 		if(pathname == '/'){
 			realPath += '/index.html'
@@ -31,18 +36,18 @@ http.createServer(function (req, res) {
 				res.end();
 			} else {
 				var contentType = types[ext] || "text/plain";
-				fs.readFile(realPath, "utf-8", function (err, content) {
+				fs.readFile(realPath, "utf-8", function (err, html) {
 					if(conf.template.use){
-						var regExp = /<template:([a-z]+)>/g;
-						var tempContent = contentFn.content(conf.template.dir);
-						while(temp = regExp.exec(content)){
-							content = content.replace(temp[0], tempContent[temp[1]]);
+						var regExp = /<template:([a-z]+)>/g,
+								htmlCont = content(conf.root+'/_dev/template','.html');
+						while(arr = regExp.exec(html)){
+							html = html.replace(arr[0], htmlCont[arr[1]].content);
 						}
-						content = content.replace(/<body>/, "<body><script>document.write('<script src=\"http://127.0.0.1:35729/livereload.js?snipver=1\"></' + 'script>')</script>");
+						html = html.replace(/<body>/, "<body><script>document.write('<script src=\"http://127.0.0.1:35729/livereload.js?snipver=1\"></' + 'script>')</script>");
 					}
 
 					res.writeHead(200, {'Content-Type': contentType});
-					res.write(content, "utf-8");
+					res.write(html, "utf-8");
 					res.end();
 				});
 			}
@@ -54,31 +59,26 @@ var server = livereload.createServer();
 server.watch(conf.root);
 opn('http://localhost:8080', {app: 'chrome'});
 
-var gulp = require('gulp'),
-		less = require('gulp-less'),
-		cssmin = require('gulp-minify-css'),
-		base64 = require('gulp-base64'),
-		base64Options = conf.base64Options;
 
-fs.watch(conf.less.input,{ encoding: 'utf-8' },function(eventType, filename){
+fs.watch(conf.root + '/_dev/less',{ encoding: 'utf-8' },function(eventType, filename){
 	if(eventType === 'change'){
-		gulp.src(conf.less.input + '/' + filename)
+		gulp.src(conf.root + '/_dev/less/' + filename)
 			.pipe(less())
 			.pipe(cssmin())
 			.pipe(base64(base64Options))
-			.pipe(gulp.dest(conf.less.output));
+			.pipe(gulp.dest(conf.root+'/assets/css'));
 		console.log( "# [css] Compile has completed: "+ filename );	
 	}
 });
 
-fs.watch(conf.javascript.input,{ encoding: 'utf-8' },function(eventType, filename){
+fs.watch(conf.root + '/_dev/js',{ encoding: 'utf-8' },function(eventType, filename){
 	if(eventType === 'change'){
-		gulp.src(conf.javascript.input + '/' + filename)
+		gulp.src(conf.root + '/_dev/js/' + filename)
 				.pipe(uglify())
 				.pipe(replace(/{{api}}/g ,function() {
 						return conf.api[conf.api.use];
 					}))
-				.pipe(gulp.dest(conf.javascript.output));
+				.pipe(gulp.dest(conf.root+'/assets/js'));
 		console.log( "# [js] Compile has completed: "+ filename );		
 	}
 });
