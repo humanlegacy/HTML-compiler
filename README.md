@@ -68,9 +68,16 @@ npm run build
     },
 }
 ```
-## 3.在文件中使用模板
+## 3.在文件中使用模板变量
 ```js
+//html模板
 <template:header>
+
+//css，引入css文件
+<css:assets/css/index.css>
+
+//js，引入js文件
+<js:assets/js/index.js>   
 ```
 自动应用`_dev/template`中的模板文件header.html
 

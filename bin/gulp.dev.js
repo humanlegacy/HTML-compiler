@@ -5,7 +5,7 @@ var url = require('url'),
 	livereload = require('livereload'),
 	opn = opn = require('opn'),
 	conf = require('../gulp.config.js'),
-	content = require('../lib/content'),
+	compile = require('../lib/compile'),
 	types = require('../lib/types').types,
 	replace = require('gulp-replace'),
 	uglify = require('gulp-uglify'),
@@ -21,32 +21,33 @@ http.createServer(function(req, res) {
 	if (pathname == '/') {
 		realPath += '/index.html'
 	}
+
 	var ext = path.extname(realPath);
-	ext = ext ? ext.slice(1) : 'unknown';
+	var name = path.basename(realPath, ext), compileCont = '';
+	ext = ext ? ext.slice(1) : 'unknown';	
+	
 	fs.exists(realPath, function(exists) {
 		if (!exists) {
-			res.writeHead(404, {
-				'Content-Type': 'text/plain'
-			});
+			res.writeHead(404, {'Content-Type': 'text/plain'});
 			res.write("This request URL " + pathname + " was not found on this server.");
 			res.end()
 		} else {
-			var contentType = types[ext] || "text/plain";
-			fs.readFile(realPath, "utf-8", function(err, html) {
-				if (conf.template.use) {
-					var regExp = /<template:([a-z]+)>/g,
-						htmlCont = content(conf.root + '/_dev/template', '.html');
-					while (arr = regExp.exec(html)) {
-						html = html.replace(arr[0], htmlCont[arr[1]].content)
-					}
-					html = html.replace(/<body>/, "<body><script>document.write('<script src=\"http://127.0.0.1:35729/livereload.js?snipver=1\"></' + 'script>')</script>")
-				}
-				res.writeHead(200, {
-					'Content-Type': contentType
-				});
-				res.write(html, "utf-8");
-				res.end()
-			})
+			res.writeHead(200, {'Content-Type': types[ext] || "text/plain"});
+			if (conf.template.use) {
+				compile(name,function(path,content){
+					compileCont = content.replace(/<body>/, "<body><script>document.write('<script src=\"http://127.0.0.1:35729/livereload.js?snipver=1\"></' + 'script>')</script>");
+				})
+			}else{
+				compileCont = fs.readFileSync(realPath, "utf-8")
+			}
+			
+			if(ext == 'html'){
+				res.write(compileCont, "utf-8");
+			}else{
+				res.write(fs.readFileSync(realPath, "utf-8"), "utf-8");
+			}
+			res.end()
+
 		}
 	})
 }).listen(8080);

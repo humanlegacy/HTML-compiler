@@ -1,7 +1,7 @@
 var path = require('path');
 	fs = require('fs'),
 	conf = require('../gulp.config'),
-	content = require('../lib/content'),
+	compile = require('../lib/compile'),
 	realPath = require('../lib/realPath'),
 	copy = require('directory-copy'),
 	thisDir = path.resolve(__dirname, '..'),
@@ -47,20 +47,10 @@ fs.exists(buildPath, function(exists) {
 				})
 			});
 			if (conf.template.use) {
-				var regExp = /<template:([a-z]+)>/g,
-					contentList = content(conf.root, '.html');
-				for (var name in contentList) {
-					var data = contentList[name];
-					if (data.type == 'html') {
-						var fileCont = data.content;
-						while (arr = regExp.exec(fileCont)) {
-							fileCont = fileCont.replace(arr[0], contentList[arr[1]].content)
-						}
-						var buildFile = data.path.replace(conf.root, conf.build);
-						fs.writeFileSync(buildFile, fileCont);
-						console.log("# [html] Compile has completed: " + buildFile)
-					}
-				}
+				compile(function(buildFile, content){
+					fs.writeFileSync(buildFile, content);
+					console.log("# [html] Compile has completed: " + buildFile)
+				})
 			}
 			console.log("# build success: " + conf.build)
 		})
