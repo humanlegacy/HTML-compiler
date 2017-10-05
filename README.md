@@ -15,22 +15,7 @@ npm install gulp -g
 ```js
 npm install gulp-live -g
 ```
-完成之后进入到你的项目目录，安装项目模板，打开命令行窗口键入并回车
-```js
-gulp-live
-```
-最后
-```js
-npm install
-```
-安装项目模板相关依赖，至此完成安装。
-```js
-//开发环境
-npm run dev
-
-//编译正式环境
-npm run build
-```
+到这里狞已经完成安装。
 ## 2.gulp.config 配置
 在下载的项目模板中`gulp.config.js`为项目配置文件。
 ```js
@@ -76,5 +61,22 @@ npm run build
 //js，引入js文件
 <js:assets/js/index.js>   
 ```
+## 4.初始化项目
+新建一个项目项目，进入目录，打开命令行窗口键入并回车
+```js
+gulp-live
+```
+初始化项目模板，完成后接着
+```js
+npm install
+```
+安装项目模板相关依赖，至此完成全部安装
+## 5.执行gulp-live
+```js
+//开发环境
+npm run dev
 
+//编译正式环境
+npm run build
+```
 
