@@ -56,7 +56,7 @@ console.log("# Server has started:	http://localhost:8080");
 var server = livereload.createServer();
 server.watch(conf.root);
 opn('http://localhost:8080', {
-	app: 'chrome'
+	app: ['google chrome','chrome']
 });
 
 fs.watch(conf.root + '/_dev/less', {encoding: 'utf-8'}, function(eventType, filename) {
