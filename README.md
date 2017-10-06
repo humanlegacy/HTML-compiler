@@ -15,7 +15,7 @@ npm install gulp -g
 ```js
 npm install gulp-live -g
 ```
-到这里狞已经完成安装。
+到这里已经完成安装。
 ## 2.gulp.config 配置
 在下载的项目模板中`gulp.config.js`为项目配置文件。
 ```js
