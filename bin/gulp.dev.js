@@ -33,19 +33,22 @@ http.createServer(function(req, res) {
 			res.end()
 		} else {
 			res.writeHead(200, {'Content-Type': types[ext] || "text/plain"});
-			if (conf.template.use) {
-				compile(name,function(path,content){
-					compileCont = content.replace(/<body>/, "<body><script>document.write('<script src=\"http://127.0.0.1:35729/livereload.js?snipver=1\"></' + 'script>')</script>");
-				})
-			}else{
-				compileCont = fs.readFileSync(realPath, "utf-8")
-			}
-			
+
 			if(ext == 'html'){
-				res.write(compileCont, "utf-8");
+				
+                if (conf.template.use) {
+                    compile(name,function(path,content){
+                        compileCont = content.replace(/<body>/, "<body><script>document.write('<script src=\"http://127.0.0.1:35729/livereload.js?snipver=1\"></' + 'script>')</script>");
+                    })
+                }else{
+                    compileCont = fs.readFileSync(realPath, "utf-8")
+                }
+                res.write(compileCont, "utf-8");
+                
 			}else{
 				res.write(fs.readFileSync(realPath, "utf-8"), "utf-8");
 			}
+            
 			res.end()
 
 		}
@@ -56,7 +59,7 @@ console.log("# Server has started:	http://localhost:8080");
 var server = livereload.createServer();
 server.watch(conf.root);
 opn('http://localhost:8080', {
-	app: ['google chrome','chrome']
+	app: conf.app
 });
 
 fs.watch(conf.root + '/_dev/less', {encoding: 'utf-8'}, function(eventType, filename) {

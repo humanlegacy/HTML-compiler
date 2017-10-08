@@ -15,5 +15,6 @@ module.exports = {
 		exclude:['ios'],
 		maxImageSize: 30*1024,
 		debug: true
-	}
+	},
+    app:['google chrome','chrome']
 }
