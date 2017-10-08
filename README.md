@@ -47,9 +47,17 @@ npm install gulp-live -g
         maxImageSize: 30 * 1024,
         debug: true
     },
+    
+    //指定调试的浏览器；
+    //window下谷歌浏览器为chrome;
+    //Mac操作系统下为google chrome
+    app:['google chrome','chrome']
 }
 ```
 ## 3.在文件中使用模板变量
+`注意：`
+1._dev/tempalte/下的模板文件名不能与视图文件重名。
+2.模板文件名可使用数字，中划线（-），大小写英文，文件名包含特殊字符将导致无法识别。
 ```js
 //html模板
 //自动应用`_dev/template`中的模板文件*.html
