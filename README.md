@@ -22,15 +22,12 @@ npm install gulp-live -g
 {
     //配置项目根目录
     root: 'www',
-
-    //编译目录
-    build: 'build-www',	
 	
     //在js文件中使用变量{{api}},指定不同开发环境
     api: {
         use: 'build',
-        dev: 'http://127.0.0.1:3000',
-        build: 'https://demo'
+        dev: 'http://127.0.0.1',
+        build: 'http://www.hello-ui.com'
     },
 
     //模板
@@ -44,7 +41,7 @@ npm install gulp-live -g
         baseDir: '',
         extensions: ['jpg', 'png'],
         exclude: ['ios'],
-        maxImageSize: 30 * 1024,
+        maxImageSize: 15 * 1024,
         debug: true
     },
     
@@ -84,7 +81,12 @@ npm install
 //开发环境
 npm run dev
 
-//编译正式环境
+//编译正式环境，js文件中变量{{api}}将使用config文件中api.build
 npm run build
+
+//指令传递参数，js文件中变量{{api}}将使用config文件中api.dev
+npm run build --dev
+
+//您也可以自定义 --[参数]，同时在api对象中添加对应的属性和值，否则js文件中的变量将不会被替换
 ```
 

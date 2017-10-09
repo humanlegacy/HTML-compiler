@@ -1,10 +1,9 @@
 module.exports = {
 	root: 'www',
-	build:'build-www',
 	api:{
 		use:'dev',
-		dev:'https://demo.dev.com',
-		build:'https://demo.build.com'
+		dev:'http://127.0.0.1',
+		build:'http://www.hello-ui.com'
 	},
 	template:{
 		use:true
@@ -13,7 +12,8 @@ module.exports = {
 		baseDir :'',
 		extensions: ['jpg', 'png'],
 		exclude:['ios'],
-		maxImageSize: 30*1024,
+        //15KB以下图片将被压缩成base64
+		maxImageSize: 15*1024,
 		debug: true
 	},
     app:['google chrome','chrome']

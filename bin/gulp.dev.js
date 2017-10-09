@@ -33,9 +33,7 @@ http.createServer(function(req, res) {
 			res.end()
 		} else {
 			res.writeHead(200, {'Content-Type': types[ext] || "text/plain"});
-
 			if(ext == 'html'){
-				
                 if (conf.template.use) {
                     compile(name,function(path,content){
                         compileCont = content.replace(/<body>/, "<body><script>document.write('<script src=\"http://127.0.0.1:35729/livereload.js?snipver=1\"></' + 'script>')</script>");
@@ -43,11 +41,12 @@ http.createServer(function(req, res) {
                 }else{
                     compileCont = fs.readFileSync(realPath, "utf-8")
                 }
-                res.write(compileCont, "utf-8");
-                
+                res.write(compileCont, "utf-8"); 
+			}else if( ['git','jpg','jpeg','png'].indexOf(ext) >= 0 ){
+				res.write(fs.readFileSync(realPath, "base64"), "base64");
 			}else{
-				res.write(fs.readFileSync(realPath, "utf-8"), "utf-8");
-			}
+                res.write(fs.readFileSync(realPath, "utf-8"), "utf-8");
+            }
             
 			res.end()
 
