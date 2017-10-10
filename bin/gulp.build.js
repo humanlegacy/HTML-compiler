@@ -53,7 +53,7 @@ fs.exists(buildPath, function(exists) {
 			var images = realPath(buildName + '/images');
 			images.forEach(function(filename) {
 				fs.stat(filename, function(err, res) {
-					if (res.size > conf.base64Options.maxImageSize) {
+					if (res.size < conf.base64Options.maxImageSize) {
 						fs.unlinkSync(filename)
 					}
 				})
