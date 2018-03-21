@@ -1,7 +1,7 @@
 {
   "name": "gulp-live",
   "version": "0.0.6",
-  "description": "",
+  "description": "[https://749264345.github.io](https://749264345.github.io)",
   "scripts": {
     "dev": "node bin/gulp.dev.js",
     "build": "node bin/gulp.build.js"
@@ -20,5 +20,12 @@
   },
   "dependencies": {
     "gulp": "^3.9.1"
+  },
+  "main": "gulp.config.js",
+  "bin": {
+    "gulp-live": "gulp.build.js"
+  },
+  "directories": {
+    "lib": "lib"
   }
 }

@@ -1,1 +1,1 @@
-console.log("https://demo.dev.com"),console.log("https://demo.dev.com");var api="https://demo.dev.com";
+console.log("hi,welcome!")
