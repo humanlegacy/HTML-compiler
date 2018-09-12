@@ -7,5 +7,5 @@ module.exports = {
 		maxImageSize: 10*1024
 	},
     app:['chrome'],
-   // app:['google chrome']
+   //app:['google chrome']
 }
